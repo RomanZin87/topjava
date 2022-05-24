@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiConsumer;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
@@ -75,7 +76,7 @@ public class UserMealsUtil {
 
     static class TestCollector implements Collector<UserMeal, List<UserMeal>, List<UserMealWithExcess>> {
 
-        private final Map<LocalDate, Integer> map = new HashMap<>();
+        private final Map<LocalDate, Integer> map;
         private final LocalTime startTime;
         private final LocalTime endTime;
         private final int caloriesPerDay;
@@ -84,6 +85,7 @@ public class UserMealsUtil {
             this.startTime = startTime;
             this.endTime = endTime;
             this.caloriesPerDay = caloriesPerDay;
+            map = new ConcurrentHashMap<>();
         }
 
         @Override
@@ -109,32 +111,29 @@ public class UserMealsUtil {
 
         @Override
         public Function<List<UserMeal>, List<UserMealWithExcess>> finisher() {
-            List<UserMealWithExcess> userMealWithExcess = new ArrayList<>();
-            return list -> {
-                list.forEach(el -> {
-                    if (TimeUtil.isBetweenHalfOpen(el.getDateTime().toLocalTime(), startTime, endTime)) {
-                        if (map.containsKey(el.getDateTime().toLocalDate()) &&
-                                map.get(el.getDateTime().toLocalDate()) > caloriesPerDay)
-                            userMealWithExcess.add(new UserMealWithExcess(
+            return list -> list.stream()
+                    .filter(el -> TimeUtil.isBetweenHalfOpen(el.getDateTime().toLocalTime(), startTime, endTime))
+                    .map(el -> {
+                        if (map.get(el.getDateTime().toLocalDate()) > caloriesPerDay) {
+                            return new UserMealWithExcess(
                                     el.getDateTime(),
                                     el.getDescription(),
                                     el.getCalories(),
-                                    true));
-                        else
-                            userMealWithExcess.add(new UserMealWithExcess(
+                                    true);
+                        } else {
+                            return new UserMealWithExcess(
                                     el.getDateTime(),
                                     el.getDescription(),
                                     el.getCalories(),
-                                    false));
-                    }
-                });
-                return userMealWithExcess;
-            };
+                                    false);
+                        }
+                    })
+                    .collect(Collectors.toList());
         }
 
         @Override
         public Set<Characteristics> characteristics() {
-            return Set.of(Characteristics.UNORDERED);
+            return EnumSet.of(Characteristics.UNORDERED);
         }
     }
 }
