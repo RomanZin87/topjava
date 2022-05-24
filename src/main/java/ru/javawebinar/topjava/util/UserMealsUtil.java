@@ -113,21 +113,11 @@ public class UserMealsUtil {
         public Function<List<UserMeal>, List<UserMealWithExcess>> finisher() {
             return list -> list.stream()
                     .filter(el -> TimeUtil.isBetweenHalfOpen(el.getDateTime().toLocalTime(), startTime, endTime))
-                    .map(el -> {
-                        if (map.get(el.getDateTime().toLocalDate()) > caloriesPerDay) {
-                            return new UserMealWithExcess(
-                                    el.getDateTime(),
-                                    el.getDescription(),
-                                    el.getCalories(),
-                                    true);
-                        } else {
-                            return new UserMealWithExcess(
-                                    el.getDateTime(),
-                                    el.getDescription(),
-                                    el.getCalories(),
-                                    false);
-                        }
-                    })
+                    .map(el -> new UserMealWithExcess(
+                            el.getDateTime(),
+                            el.getDescription(),
+                            el.getCalories(),
+                            map.get(el.getDateTime().toLocalDate()) > caloriesPerDay))
                     .collect(Collectors.toList());
         }
 
