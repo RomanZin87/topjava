@@ -20,10 +20,10 @@ public class MealServlet extends HttpServlet {
 
     private static final int CALORIES_PER_DAY = 2000;
 
-    private final MealRepository meals;
+    private MealRepository meals;
 
-    public MealServlet() {
-        super();
+    @Override
+    public void init() {
         meals = new MealRepoInMemoryImpl();
     }
 
@@ -31,11 +31,9 @@ public class MealServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         log.debug("redirect to meals");
 
-        List<MealTo> mealTos = MealsUtil.filteredByStreams(meals.getAll(), LocalTime.of(0, 0), LocalTime.of(23, 59), CALORIES_PER_DAY);
+        List<MealTo> mealTos = MealsUtil.filteredByStreams(meals.getAll(), LocalTime.MIN, LocalTime.MAX, CALORIES_PER_DAY);
 
         request.setAttribute("mealTos", mealTos);
         request.getRequestDispatcher("/meals.jsp").forward(request, response);
     }
-
-
 }

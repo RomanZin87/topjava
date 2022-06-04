@@ -26,8 +26,8 @@ public class MealRepoInMemoryImpl implements MealRepository {
     }
 
     @Override
-    public void save(Meal meal) {
-
+    public Meal save(Meal meal) {
+        return null;
     }
 
     @Override

@@ -1,4 +1,4 @@
-<%@ page import="ru.javawebinar.topjava.util.TimeUtil" %>
+<%@ page import="ru.javawebinar.topjava.util.DateTimeUtil" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html lang="ru">
@@ -8,6 +8,7 @@
         .normal {
             color: green;
         }
+
         .exceeded {
             color: red;
         }
@@ -28,10 +29,8 @@
     <tbody>
     <c:forEach var="mealTo" items="${mealTos}">
         <jsp:useBean id="mealTo" type="ru.javawebinar.topjava.model.MealTo"/>
-        <tr class="${mealTo.excess? 'exceeded':'normal'}">
-            <td>
-                <%=TimeUtil.formatDate(mealTo.getDateTime())%>
-            </td>
+        <tr class="${mealTo.excess ? 'exceeded':'normal'}">
+            <td>${DateTimeUtil.formatDate(mealTo.getDateTime())}</td>
             <td>${mealTo.description}</td>
             <td>${mealTo.calories}</td>
         </tr>
