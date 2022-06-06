@@ -43,19 +43,22 @@ public class MealServlet extends HttpServlet {
             log.debug("Delete meal with id={} ", id);
             mealRepository.delete(id);
             response.sendRedirect("meals");
-        } else {
-            Meal meal = action.equals("create") ?
-                    new Meal(LocalDateTime.now(), "description", 0) :
-                    mealRepository.get(Integer.parseInt(request.getParameter("id")));
+        } else if (action.equals("create")){
+            Meal meal = new Meal(LocalDateTime.now(), "description", 0);
+            request.setAttribute("meal", meal);
+            request.getRequestDispatcher("mealForm.jsp").forward(request, response);
+        } else if (action.equals("update")) {
+            Meal meal = mealRepository.get(Integer.parseInt(request.getParameter("id")));
             request.setAttribute("meal", meal);
             request.getRequestDispatcher("mealForm.jsp").forward(request, response);
         }
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         log.debug("forward to mealForm");
         request.setCharacterEncoding("UTF-8");
+
         String id = request.getParameter("id");
         Meal meal = new Meal(LocalDateTime.parse(request.getParameter("dateTime")),
                 request.getParameter("description"),
