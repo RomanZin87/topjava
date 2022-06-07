@@ -36,10 +36,10 @@
     <tbody>
     <c:forEach var="mealTo" items="${mealTos}">
         <jsp:useBean id="mealTo" type="ru.javawebinar.topjava.model.MealTo"/>
-        <tr>
-            <td class="${mealTo.excess ? 'exceeded':'normal'}">${DateTimeUtil.formatDate(mealTo.getDateTime())}</td>
-            <td class="${mealTo.excess ? 'exceeded':'normal'}">${mealTo.description}</td>
-            <td class="${mealTo.excess ? 'exceeded':'normal'}">${mealTo.calories}</td>
+        <tr class="${mealTo.excess ? 'exceeded':'normal'}">
+            <td>${DateTimeUtil.formatDate(mealTo.getDateTime())}</td>
+            <td>${mealTo.description}</td>
+            <td>${mealTo.calories}</td>
             <td><a href="meals?action=update&id=${mealTo.id}">Update</a> </td>
             <td><a href="meals?action=delete&id=${mealTo.id}">Delete</a> </td>
         </tr>

@@ -6,7 +6,7 @@
 <body>
 <h3><a href="index.html">Home</a></h3>
 <section>
-    <h3><%=request.getParameter("action").equalsIgnoreCase("create") ?  "Add new" : "Edit"%> meal</h3>
+    <h3>${param.action.equalsIgnoreCase("create") ? "Add new" : "Edit"}</h3>
     <hr>
     <jsp:useBean id="meal" type="ru.javawebinar.topjava.model.Meal" scope="request"/>
     <form method="post" action="meals">
