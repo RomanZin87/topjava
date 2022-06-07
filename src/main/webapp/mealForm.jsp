@@ -20,8 +20,8 @@
             <dd><label><input type="number" value="${meal.calories}" name="calories"></label></dd>
         </dl>
         <button type="submit">Save</button>
-        <button onclick="window.history.back()">Cancel</button>
     </form>
+    <button onclick="window.history.back()">Cancel</button>
 </section>
 </body>
 </html>
