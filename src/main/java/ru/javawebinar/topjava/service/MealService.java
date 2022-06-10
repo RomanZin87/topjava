@@ -4,6 +4,9 @@ import ru.javawebinar.topjava.repository.MealRepository;
 
 public class MealService {
 
-    private MealRepository repository;
+    private final MealRepository repository;
 
+    public MealService(MealRepository repository) {
+        this.repository = repository;
+    }
 }
