@@ -2,7 +2,6 @@ package ru.javawebinar.topjava.web.meal;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.service.MealService;
@@ -10,6 +9,7 @@ import ru.javawebinar.topjava.to.MealTo;
 import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.web.SecurityUtil;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -32,10 +32,12 @@ public class MealRestController {
         return MealsUtil.getTos(service.getAll(userId), SecurityUtil.authUserCaloriesPerDay());
     }
 
-    public List<MealTo> getAllBetween(LocalTime startTime, LocalTime endTime) {
+    public List<MealTo> getAllBetween(LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime) {
         int userId = SecurityUtil.authUserId();
-        log.info("getAll meals for user '{}' between {} and {}", userId, startTime, endTime);
-        return MealsUtil.getTos(service.getAllBetween(userId, startTime, endTime), SecurityUtil.authUserCaloriesPerDay());
+        log.info("getAll meals for user '{}' between {} and {} date and {} and {} time", userId, startDate, endDate, startTime, endTime);
+        return MealsUtil.getFilteredTos(service.getAll(userId),
+                SecurityUtil.authUserCaloriesPerDay(),
+                startDate, endDate, startTime, endTime);
     }
 
     public Meal get(int id) {
