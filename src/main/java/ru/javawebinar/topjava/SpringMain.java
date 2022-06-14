@@ -34,7 +34,7 @@ public class SpringMain {
             System.out.println("------------------------------------------------");
             System.out.println(mealRestController.get(4));
             System.out.println("------------------------------------------------");
-            mealRestController.update(new Meal(4,LocalDateTime.of(2022, Month.JUNE, 12, 10, 0), "Обновленная еда", 500),4);
+            mealRestController.update(new Meal(4, LocalDateTime.of(2022, Month.JUNE, 12, 10, 0), "Обновленная еда", 500), 4);
             System.out.println("------------------------------------------------");
             mealRestController.getAll().forEach(System.out::println);
             System.out.println("------------------------------------------------");

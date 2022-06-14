@@ -9,6 +9,7 @@ import ru.javawebinar.topjava.service.MealService;
 import ru.javawebinar.topjava.to.MealTo;
 import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.web.SecurityUtil;
+
 import java.time.LocalTime;
 import java.util.List;
 
@@ -21,7 +22,6 @@ public class MealRestController {
 
     private final MealService service;
 
-    @Autowired
     public MealRestController(MealService service) {
         this.service = service;
     }
@@ -46,7 +46,7 @@ public class MealRestController {
 
     public Meal create(Meal meal) {
         int userId = SecurityUtil.authUserId();
-        log.info("create new {} for user '{}'", meal.toString(), userId);
+        log.info("create new {} for user '{}'", meal, userId);
         checkNew(meal);
         return service.create(meal, userId);
     }
@@ -59,10 +59,8 @@ public class MealRestController {
 
     public void update(Meal meal, int id) {
         int userId = SecurityUtil.authUserId();
-        log.info("update {} with id={} for user '{}'", meal.toString(), id, userId);
+        log.info("update {} with id={} for user '{}'", meal, id, userId);
         assureIdConsistent(meal, id);
         service.update(meal, userId);
     }
-
-
 }
