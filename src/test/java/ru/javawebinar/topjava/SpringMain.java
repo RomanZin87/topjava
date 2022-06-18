@@ -16,6 +16,7 @@ import java.util.List;
 
 public class SpringMain {
     public static void main(String[] args) {
+//        System.out.println(System.getenv("TOPJAVA_ROOT"));
         // java 7 automatic resource management (ARM)
         try (ConfigurableApplicationContext appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml")) {
             System.out.println("Bean definition names: " + Arrays.toString(appCtx.getBeanDefinitionNames()));
