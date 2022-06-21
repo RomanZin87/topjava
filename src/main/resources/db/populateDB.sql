@@ -11,7 +11,7 @@ VALUES ('User', 'user@yandex.ru', 'password'),
        ('Admin', 'admin@gmail.com', 'admin'),
        ('Guest', 'guest@gmail.com', 'guest');
 
-INSERT INTO meals (user_id, datetime, description, calories)
+INSERT INTO meals (user_id, date_time, description, calories)
 VALUES (100000, '2022-06-17 10:00:00', 'Завтрак', 500),
        (100000, '2022-06-17 13:00:00', 'Обед', 1000),
        (100000, '2022-06-17 20:00:00', 'Ужин', 500),
