@@ -21,6 +21,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static ru.javawebinar.topjava.UserTestData.*;
+import static ru.javawebinar.topjava.MealTestData.*;
 
 @Repository
 public class InMemoryMealRepository implements MealRepository {
@@ -30,11 +31,15 @@ public class InMemoryMealRepository implements MealRepository {
     private final Map<Integer, InMemoryBaseRepository<Meal>> usersMealsMap = new ConcurrentHashMap<>();
 
     {
-        InMemoryBaseRepository<Meal> userMeals = new InMemoryBaseRepository<>();
-        MealTestData.mealList.forEach(userMeals::put);
-        usersMealsMap.put(USER_ID, userMeals);
-        save(new Meal(LocalDateTime.of(2015, Month.JUNE, 1, 14, 0), "Админ ланч", 510), ADMIN_ID);
-        save(new Meal(LocalDateTime.of(2015, Month.JUNE, 1, 21, 0), "Админ ужин", 1500), ADMIN_ID);
+        save(userMeal1, USER_ID);
+        save(userMeal2, USER_ID);
+        save(userMeal3, USER_ID);
+        save(userMeal4, USER_ID);
+        save(userMeal5, USER_ID);
+        save(userMeal6, USER_ID);
+        save(userMeal7, USER_ID);
+        save(adminMeal1, ADMIN_ID);
+        save(adminMeal2, ADMIN_ID);
     }
 
 
