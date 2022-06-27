@@ -18,30 +18,35 @@ import java.time.LocalTime;
         @NamedQuery(name = Meal.GET_ALL_BETWEEN_ORDERED,
                 query = "SELECT m FROM Meal m WHERE m.user.id=:userId " +
                         "AND m.dateTime>=:startDateTime AND m.dateTime<:endDateTime ORDER BY m.dateTime DESC"),
+        @NamedQuery(name = Meal.UPDATE,
+                query = "UPDATE Meal m SET m.dateTime = :datetime, m.calories= :calories," +
+                        "m.description=:description WHERE m.id=:id AND m.user.id=:userId")
 })
 @Entity
-@Table(name = "meals")
+@Table(name = "meals", indexes = {@Index(name = "meals_unique_user_datetime_idx", columnList = "user_id, date_time", unique = true)})
 public class Meal extends AbstractBaseEntity {
     public static final String DELETE = "Meal.delete";
     public static final String GET = "Meal.get";
+    public static final String UPDATE = "Meal.update";
     public static final String GET_ALL_ORDERED = "Meal.getAll";
     public static final String GET_ALL_BETWEEN_ORDERED = "Meal.getAllBetween";
-    @Column(name = "date_time", nullable = false, unique = true)
+
+    @Column(name = "date_time", nullable = false)
     @NotNull
     private LocalDateTime dateTime;
 
     @Column(name = "description", nullable = false)
-    @Size(min = 5, max = 100)
+    @Size(min = 3, max = 100)
     @NotBlank
     private String description;
 
     @Column(name = "calories", nullable = false)
-    @NotNull
     @Range(min = 5, max = 1500)
     private int calories;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
+    @NotNull
     private User user;
 
     public Meal() {
