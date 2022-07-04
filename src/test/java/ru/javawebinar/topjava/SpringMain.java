@@ -18,7 +18,10 @@ public class SpringMain {
     public static void main(String[] args) {
 //        System.out.println(System.getenv("TOPJAVA_ROOT"));
         // java 7 automatic resource management (ARM)
-        try (ConfigurableApplicationContext appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/inmemory.xml")) {
+        try (ClassPathXmlApplicationContext appCtx = new ClassPathXmlApplicationContext()) {
+            appCtx.getEnvironment().setActiveProfiles(Profiles.getActiveDbProfile(), Profiles.DATAJPA);
+            appCtx.setConfigLocations("spring/spring-app.xml", "spring/spring-db.xml");
+            appCtx.refresh();
             System.out.println("Bean definition names: " + Arrays.toString(appCtx.getBeanDefinitionNames()));
             AdminRestController adminUserController = appCtx.getBean(AdminRestController.class);
             adminUserController.create(new User(null, "userName", "email@mail.ru", "password", Role.ADMIN));
