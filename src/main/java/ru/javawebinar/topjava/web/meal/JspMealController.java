@@ -1,6 +1,5 @@
 package ru.javawebinar.topjava.web.meal;
 
-import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -24,7 +23,7 @@ import static ru.javawebinar.topjava.util.DateTimeUtil.parseLocalTime;
 public class JspMealController extends AbstractMealController {
 
     @GetMapping
-    public String getMeals(@NotNull Model model) {
+    public String getMeals(Model model) {
         model.addAttribute("meals", super.getAll());
         return "meals";
     }
@@ -36,21 +35,21 @@ public class JspMealController extends AbstractMealController {
     }
 
     @GetMapping("/create")
-    public String addMeal(@NotNull Model model) {
+    public String addMeal(Model model) {
         Meal meal = new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 1000);
         model.addAttribute("meal", meal);
         return "mealForm";
     }
 
     @GetMapping("/update")
-    public String updateMeal(@NotNull Model model, HttpServletRequest request) {
+    public String updateMeal(Model model, HttpServletRequest request) {
         Meal meal = super.get(getId(request));
         model.addAttribute("meal", meal);
         return "mealForm";
     }
 
     @PostMapping
-    public String updateOrCreate(@NotNull HttpServletRequest request) {
+    public String updateOrCreate(HttpServletRequest request) {
         Meal meal = new Meal(
                 LocalDateTime.parse(request.getParameter("dateTime")),
                 request.getParameter("description"),
@@ -64,7 +63,7 @@ public class JspMealController extends AbstractMealController {
     }
 
     @GetMapping("/filter")
-    public String getFiltered(@NotNull Model model, @NotNull HttpServletRequest request) {
+    public String getFiltered(Model model,HttpServletRequest request) {
         LocalDate startDate = parseLocalDate(request.getParameter("startDate"));
         LocalDate endDate = parseLocalDate(request.getParameter("endDate"));
         LocalTime startTime = parseLocalTime(request.getParameter("startTime"));
@@ -73,7 +72,7 @@ public class JspMealController extends AbstractMealController {
         return "meals";
     }
 
-    private int getId(@NotNull HttpServletRequest request) {
+    private int getId(HttpServletRequest request) {
         String paramId = Objects.requireNonNull(request.getParameter("id"));
         return Integer.parseInt(paramId);
     }
