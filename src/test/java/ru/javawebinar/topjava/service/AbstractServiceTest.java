@@ -29,17 +29,17 @@ import static ru.javawebinar.topjava.util.ValidationUtil.getRootCause;
 @ActiveProfiles(resolver = ActiveDbProfileResolver.class)
 public abstract class AbstractServiceTest {
 
-    @Autowired
-    Environment env;
-
     @ClassRule
     public static ExternalResource summary = TimingRules.SUMMARY;
 
     @Rule
     public Stopwatch stopwatch = TimingRules.STOPWATCH;
 
-    public boolean checkNotJDBC() {
-        return env.acceptsProfiles(Profiles.of(DATAJPA,JPA));
+    @Autowired
+    private Environment env;
+
+    public boolean checkNotJdbc() {
+        return env.acceptsProfiles(Profiles.of(DATAJPA, JPA));
     }
 
     //  Check root cause in JUnit: https://github.com/junit-team/junit4/pull/778

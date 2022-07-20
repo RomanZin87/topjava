@@ -23,26 +23,26 @@ import static ru.javawebinar.topjava.util.DateTimeUtil.parseLocalTime;
 public class JspMealController extends AbstractMealController {
 
     @GetMapping
-    public String getMeals(Model model) {
+    public String getAll(Model model) {
         model.addAttribute("meals", super.getAll());
         return "meals";
     }
 
     @GetMapping("/delete")
-    public String deleteMeal(HttpServletRequest request) {
+    public String delete(HttpServletRequest request) {
         super.delete(getId(request));
         return "redirect:/meals";
     }
 
     @GetMapping("/create")
-    public String addMeal(Model model) {
+    public String add(Model model) {
         Meal meal = new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 1000);
         model.addAttribute("meal", meal);
         return "mealForm";
     }
 
     @GetMapping("/update")
-    public String updateMeal(Model model, HttpServletRequest request) {
+    public String update(Model model, HttpServletRequest request) {
         Meal meal = super.get(getId(request));
         model.addAttribute("meal", meal);
         return "mealForm";

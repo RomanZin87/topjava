@@ -22,7 +22,7 @@ public class JpaUserServiceTest extends AbstractUserServiceTest {
     public void setup() {
 
         cacheManager.getCache("users").clear();
-        if(checkNotJDBC()) {
+        if(checkNotJdbc()) {
             jpaUtil.clear2ndLevelHibernateCache();
         }
     }
