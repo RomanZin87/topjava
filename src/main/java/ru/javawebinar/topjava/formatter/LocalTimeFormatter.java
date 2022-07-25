@@ -11,7 +11,7 @@ public class LocalTimeFormatter implements Formatter<LocalTime> {
 
     @Override
     public LocalTime parse(String text, Locale locale) throws ParseException {
-        if(text.isEmpty()) {
+        if (text.isEmpty()) {
             return null;
         }
         return LocalTime.parse(text, DateTimeFormatter.ISO_LOCAL_TIME);
