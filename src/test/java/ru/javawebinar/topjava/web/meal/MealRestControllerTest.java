@@ -88,7 +88,7 @@ class MealRestControllerTest extends AbstractControllerTest {
                         "between")
                 .param("startDate", "2020-01-31").param("startTime", "07:00")
                 .param("endDate", "2020-01-31").param("endTime", "20:00"))
-//                .andExpect(status().isOk())
+                .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(MEAL_TO_MATCHER.contentJson(createTo(meal6, true), createTo(meal5, true)));
