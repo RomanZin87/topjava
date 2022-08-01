@@ -37,3 +37,14 @@ $(function () {
         })
     );
 });
+
+function filterTable() {
+    let filterer = $("#filter");
+    $.ajax({
+        type: "GET",
+        url: ctx.ajaxUrl + "filter",
+        data: filterer.serialize()
+    }).done(function () {
+        ctx.datatableApi.clear().rows.add(data).draw();
+    });
+}

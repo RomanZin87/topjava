@@ -31,7 +31,7 @@
                 <dt><spring:message code="meal.endTime"/>:</dt>
                 <dd><input type="time" name="endTime" value="${param.endTime}"></dd>
             </dl>
-            <button class="btn btn-primary" onclick="updateTable()">
+            <button class="btn btn-primary" type="button" onclick="filterTable()">
                 <span class="fa fa-filter"></span>
                 <spring:message code="meal.filter"/>
             </button>
@@ -63,7 +63,6 @@
                     <td>${meal.calories}</td>
                     <td><a><span class="fa fa-pencil"></span></a></td>
                     <td><a onclick="deleteRow(${meal.id})"><span class="fa fa-remove"></span></a></td>
-<%--                    <td><a class="delete"><span class="fa fa-remove"></span></a></td>--%>
                 </tr>
             </c:forEach>
         </table>
