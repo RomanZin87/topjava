@@ -44,7 +44,7 @@ function filterTable() {
         type: "GET",
         url: ctx.ajaxUrl + "filter",
         data: filterer.serialize()
-    }).done(function () {
+    }).done(function (data){
         ctx.datatableApi.clear().rows.add(data).draw();
     });
 }
