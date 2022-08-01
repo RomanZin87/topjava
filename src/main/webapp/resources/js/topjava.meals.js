@@ -31,7 +31,7 @@ $(function () {
             "order": [
                 [
                     0,
-                    "asc"
+                    "desc"
                 ]
             ]
         })
@@ -39,12 +39,16 @@ $(function () {
 });
 
 function filterTable() {
-    let filterer = $("#filter");
     $.ajax({
         type: "GET",
         url: ctx.ajaxUrl + "filter",
-        data: filterer.serialize()
-    }).done(function (data){
+        data: $("#filter").serialize()
+    }).done(function (data) {
         ctx.datatableApi.clear().rows.add(data).draw();
     });
+}
+
+function filterCancel() {
+    $("#filter")[0].reset();
+    updateTable();
 }
