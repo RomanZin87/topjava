@@ -86,7 +86,6 @@ $(function () {
     });
 
     $("#dateTime").datetimepicker({
-        datepicker: false,
         format: 'Y-m-d H:i',
     })
 });
