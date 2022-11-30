@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://topjava.javawebinar.ru/functions" %>
 <html>
 <head>
     <title>Meals</title>
@@ -22,6 +23,13 @@
         th {
             background: #b0e0e6; /* Цвет фона */
         }
+
+        .exceed {
+            color: red;
+        }
+        .normal {
+            color: green;
+        }
     </style>
 </head>
 <body>
@@ -35,8 +43,8 @@
         <th>Calories</th>
     </tr>
     <c:forEach items="${mealTos}" var="mealTo">
-        <tr>
-            <td>${mealTo.dateTime}</td>
+        <tr ${mealTo.excess? 'class="exceed"': 'class="normal"'} >
+            <td>${fn:formatDateTime(mealTo.dateTime)}</td>
             <td>${mealTo.description}</td>
             <td>${mealTo.calories}</td>
         </tr>

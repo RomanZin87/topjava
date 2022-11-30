@@ -2,6 +2,7 @@ package ru.javawebinar.topjava.web;
 
 import org.slf4j.Logger;
 import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.model.MealTo;
 import ru.javawebinar.topjava.util.MealsUtil;
 
 import javax.servlet.ServletException;
@@ -22,16 +23,13 @@ public class MealServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Meal> meals = MealsUtil.meals;
 
-        Map<LocalDate, Integer> caloriesSumByDate = meals.stream()
-                .collect(
-                        Collectors.groupingBy(Meal::getDate, Collectors.summingInt(Meal::getCalories)));
-
-        meals.forEach(meal -> MealsUtil.createTo(meal, caloriesSumByDate.get(meal.getDateTime().toLocalDate()) > MealsUtil.CALORIES_PER_DAY));
-        req.setAttribute("mealTos", meals);
+        List<MealTo> mealsTos = MealsUtil.getMealTos(MealsUtil.meals);
+        req.setAttribute("mealTos", mealsTos);
 
         log.debug("forward to meals");
         req.getRequestDispatcher("meals.jsp").forward(req, resp);
     }
+
+
 }
