@@ -36,17 +36,24 @@
 
 <h3><a href="index.html">Home</a></h3>
 <h2>Meals</h2>
+<h3><a href="meals?action=create">Add meal</a> </h3>
 <table>
     <tr>
+        <th>Id</th>
         <th>DateTime</th>
         <th>Description</th>
         <th>Calories</th>
+        <th></th>
+        <th></th>
     </tr>
     <c:forEach items="${mealTos}" var="mealTo">
         <tr ${mealTo.excess? 'class="exceed"': 'class="normal"'} >
+            <td>${mealTo.id}</td>
             <td>${fn:formatDateTime(mealTo.dateTime)}</td>
             <td>${mealTo.description}</td>
             <td>${mealTo.calories}</td>
+            <td><a href="meals?action=update&id=${mealTo.id}"/>Update</td>
+            <td><a href="meals?action=delete&id=${mealTo.id}"/>Delete</td>
         </tr>
     </c:forEach>
 </table>
