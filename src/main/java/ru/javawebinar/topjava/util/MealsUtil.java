@@ -42,11 +42,6 @@ public class MealsUtil {
         return new MealTo(id, meal.getDateTime(), meal.getDescription(), meal.getCalories(), excess);
     }
 
-    public static Meal fromTo(MealTo mealTo) {
-        return new Meal(mealTo.getDateTime(), mealTo.getDescription(), mealTo.getCalories());
-    }
-
-
     public static List<MealTo> getMealTos(Map<Integer, Meal> meals) {
         Map<LocalDate, Integer> caloriesSumByDate = meals.values().stream()
                 .collect(

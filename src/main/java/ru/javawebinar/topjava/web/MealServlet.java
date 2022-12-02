@@ -11,12 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -67,10 +63,10 @@ public class MealServlet extends HttpServlet {
             }
             case "all":
                 forward = LIST_USER;
+                log.debug("forward to meals");
                 req.setAttribute("mealTos", MealsUtil.getMealTos(mealDAO.getAll()));
                 break;
         }
-
         req.getRequestDispatcher(forward).forward(req, resp);
     }
 
@@ -84,11 +80,16 @@ public class MealServlet extends HttpServlet {
 
         String id = req.getParameter("id");
         if(id.equals("0")) {
+            log.debug("save meal");
             mealDAO.save(meal);
         }
-        else mealDAO.update(Integer.parseInt(id), meal);
+        else {
+            log.debug("update meal");
+            mealDAO.update(Integer.parseInt(id), meal);
+        }
 
         req.setAttribute("mealTos", MealsUtil.getMealTos(mealDAO.getAll()));
+        log.debug("forward to meals");
         req.getRequestDispatcher(LIST_USER).forward(req, resp);
     }
 }
