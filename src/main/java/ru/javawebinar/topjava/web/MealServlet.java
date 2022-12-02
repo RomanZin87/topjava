@@ -76,7 +76,19 @@ public class MealServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
+        Meal meal = new Meal();
+        meal.setDateTime(LocalDateTime.parse(req.getParameter("dateTime")));
+        meal.setDescription(req.getParameter("description"));
+        meal.setCalories(Integer.parseInt(req.getParameter("calories")));
 
-        //TODO
+        String id = req.getParameter("id");
+        if(id.equals("0")) {
+            mealDAO.save(meal);
+        }
+        else mealDAO.update(Integer.parseInt(id), meal);
+
+        req.setAttribute("mealTos", MealsUtil.getMealTos(mealDAO.getAll()));
+        req.getRequestDispatcher(LIST_USER).forward(req, resp);
     }
 }
