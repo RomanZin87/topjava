@@ -5,6 +5,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
+import ru.javawebinar.topjava.service.MealService;
 import ru.javawebinar.topjava.web.meal.MealRestController;
 import ru.javawebinar.topjava.web.user.AdminRestController;
 
@@ -31,7 +32,9 @@ public class SpringMain {
 
             controller.update(meal, 1);
             controller.getAll().forEach(System.out::println);
-
+            MealService service = appCtx.getBean(MealService.class);
+            System.out.println("туц");
+            service.update(controller.get(1), 2);
 
         }
     }

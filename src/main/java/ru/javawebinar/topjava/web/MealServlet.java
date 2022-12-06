@@ -8,6 +8,7 @@ import org.springframework.util.StringUtils;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.repository.inmemory.InMemoryMealRepository;
+import ru.javawebinar.topjava.util.DateTimeUtil;
 import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.web.meal.MealRestController;
 
@@ -16,7 +17,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
@@ -61,6 +64,15 @@ public class MealServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
 
+        if(action!=null && action.equals("filter")) {
+            LocalDate startDate = DateTimeUtil.parseToLocalDate(request.getParameter("startDate"));
+            LocalDate endDate = DateTimeUtil.parseToLocalDate(request.getParameter("endDate"));
+            LocalTime startTime = DateTimeUtil.parseToLocalTime(request.getParameter("startTime"));
+            LocalTime endTime = DateTimeUtil.parseToLocalTime(request.getParameter("endTime"));
+            request.setAttribute("meals",
+                    controller.getAllFiltered(startDate, endDate, startTime, endTime));
+            request.getRequestDispatcher("/meals.jsp").forward(request, response);
+        }
         switch (action == null ? "all" : action) {
             case "delete":
                 int id = getId(request);

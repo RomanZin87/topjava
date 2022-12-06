@@ -3,13 +3,17 @@ package ru.javawebinar.topjava.web.meal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.service.MealService;
 import ru.javawebinar.topjava.to.MealTo;
+import ru.javawebinar.topjava.util.DateTimeUtil;
 import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.web.SecurityUtil;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import static ru.javawebinar.topjava.util.ValidationUtil.*;
@@ -55,5 +59,14 @@ public class MealRestController {
         int userId = SecurityUtil.authUserId();
         log.info("delete meal with id {} for user {}", id, userId);
         service.delete(id, userId);
+    }
+
+    public List<MealTo> getAllFiltered(@Nullable LocalDate startDate, @Nullable LocalDate endDate,
+                                 @Nullable LocalTime startTime, @Nullable LocalTime endTime) {
+        int userId = SecurityUtil.authUserId();
+        log.info("getAllFiltered for user {}", userId);
+        List<Meal> mealsDateFiltered = service.getBetweenInclusive(startDate, endDate, userId);
+        return MealsUtil.getFilteredTos(mealsDateFiltered, SecurityUtil.authUserCaloriesPerDay(),
+                DateTimeUtil.atStartOfTimeOrMin(startTime) , DateTimeUtil.atEndOfTimeOrMax(endTime));
     }
 }
