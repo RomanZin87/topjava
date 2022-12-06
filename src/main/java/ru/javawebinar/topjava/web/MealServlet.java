@@ -64,6 +64,10 @@ public class MealServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
 
+        if(StringUtils.hasLength(request.getParameter("select"))) {
+            SecurityUtil.setAuthUserId(Integer.parseInt(request.getParameter("select")));
+        }
+
         if(action!=null && action.equals("filter")) {
             LocalDate startDate = DateTimeUtil.parseToLocalDate(request.getParameter("startDate"));
             LocalDate endDate = DateTimeUtil.parseToLocalDate(request.getParameter("endDate"));
