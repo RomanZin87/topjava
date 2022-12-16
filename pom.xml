@@ -187,9 +187,13 @@
             <id>hsqldb</id>
             <dependencies>
                 <dependency>
-                    <groupId>org.hsqldb</groupId>
-                    <artifactId>hsqldb</artifactId>
-                    <version>2.3.4</version>
+<!--                    <groupId>org.hsqldb</groupId>-->
+<!--                    <artifactId>hsqldb</artifactId>-->
+<!--                    <version>2.3.4</version>-->
+                    <!-- https://mvnrepository.com/artifact/org.hsqldb/hsqldb -->
+                        <groupId>org.hsqldb</groupId>
+                        <artifactId>hsqldb</artifactId>
+                        <version>2.7.1</version>
                 </dependency>
             </dependencies>
         </profile>
